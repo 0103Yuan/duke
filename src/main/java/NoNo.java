@@ -51,8 +51,24 @@ public class NoNo {
                     }
                     System.out.println();
                 }
-            } else {
-                Task t = new Task(instruction);
+            } else if (instruction.startsWith("todo")){  // e.g. todo borrow book
+                String description = instruction.substring(5);
+                Task t = new ToDo(description);
+                taskList[taskNum] = t;
+                System.out.println("new task added: " + t + "\n");
+                taskNum++;
+            } else if (instruction.startsWith("deadline")) { // e.g. deadline return book /by Sunday
+                String description = instruction.substring(9,instruction.indexOf("/by "));
+                String by = instruction.substring(instruction.indexOf("by "));
+                Task t = new Deadline(description, by);
+                taskList[taskNum] = t;
+                System.out.println("new task added: " + t + "\n");
+                taskNum++;
+            } else if (instruction.startsWith("event")) {  // e.g. event project meeting /from Mon 2pm /to 4pm
+                String description = instruction.substring(6,instruction.indexOf("/from"));
+                String start = instruction.substring(instruction.indexOf("from"), instruction.indexOf("/to"));
+                String end = instruction.substring(instruction.indexOf("to"));
+                Task t = new Event (description, start, end);
                 taskList[taskNum] = t;
                 System.out.println("new task added: " + t + "\n");
                 taskNum++;
