@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class NoNo {
@@ -6,8 +6,7 @@ public class NoNo {
         System.out.println("Hello! I'm NoNo");
         System.out.println("What can I do for you?\n");
 
-        Task[] taskList = new Task[100];
-        int taskNum = 0;
+        ArrayList<Task> taskList = new ArrayList<>();
 
         Scanner in = new Scanner(System.in);
         String instruction = in.nextLine();
@@ -25,12 +24,12 @@ public class NoNo {
                     } catch (NumberFormatException error) {
                         throw new UserInputException("Sorry, task number must be an integer.\n");
                     }
-                    if (numDone < 0 || numDone >= taskNum) {
+                    if (numDone < 0 || numDone >= taskList.size()) {
                         throw new UserInputException("Sorry, invalid task number, enter list to check current task list.\n");
                     } else {
-                        taskList[numDone].markAsDone(true);
+                        taskList.get(numDone).markAsDone(true);
                         System.out.println("Nice! The task is marked as done:");
-                        System.out.println("[" + taskList[numDone].getStatusIcon() + "] " + taskList[numDone] + "\n");
+                        System.out.println("[" + taskList.get(numDone).getStatusIcon() + "] " + taskList.get(numDone) + "\n");
                     }
                 } else if (instruction.startsWith("unmark")) {
                     String[] words = instruction.trim().split("\\s+");;
@@ -43,20 +42,20 @@ public class NoNo {
                     } catch (NumberFormatException error) {
                         throw new UserInputException("Sorry, task number must be an integer.\n");
                     }
-                    if (numDone < 0 || numDone >= taskNum) {
+                    if (numDone < 0 || numDone >= taskList.size()) {
                         throw new UserInputException("Sorry, invalid task number, enter list to check current task list.\n");
                     } else {
-                        taskList[numDone].markAsDone(false);
+                        taskList.get(numDone).markAsDone(false);
                         System.out.println("OK! The task is marked as not done yet:");
-                        System.out.println("[" + taskList[numDone].getStatusIcon() + "] " + taskList[numDone] + "\n");
+                        System.out.println("[" + taskList.get(numDone).getStatusIcon() + "] " + taskList.get(numDone) + "\n");
                     }
                 } else if (instruction.equals("list")) {
                     System.out.println("to do list: ");
-                    if (taskNum == 0) {
+                    if (taskList.isEmpty()) {
                         System.out.println("no task added yet\n");
                     } else {
-                        for (int j = 0; j < taskNum; j++) {
-                            System.out.println((j + 1) + ". " + "[" + taskList[j].getStatusIcon() + "]" + taskList[j]);
+                        for (int j = 0; j < taskList.size(); j++) {
+                            System.out.println((j + 1) + ". " + "[" + taskList.get(j).getStatusIcon() + "]" + taskList.get(j));
                         }
                         System.out.println();
                     }
@@ -66,9 +65,8 @@ public class NoNo {
                         throw new UserInputException("Sorry, the to do description cannot be empty: todo ...\n");
                     }
                     Task t = new ToDo(description);
-                    taskList[taskNum] = t;
+                    taskList.add(t);
                     System.out.println("new task added: " + t + "\n");
-                    taskNum++;
                 } else if (instruction.startsWith("deadline")) { // e.g. deadline return book /by Sunday
                     int byIdx = instruction.indexOf("/by");
                     if(byIdx == -1) {
@@ -83,9 +81,8 @@ public class NoNo {
                         throw new UserInputException("Sorry, deadline cannot be empty: /by ...\n");
                     }
                     Task t = new Deadline(description, by);
-                    taskList[taskNum] = t;
+                    taskList.add(t);
                     System.out.println("new task added: " + t + "\n");
-                    taskNum++;
                 } else if (instruction.startsWith("event")) {  // e.g. event project meeting /from Mon 2pm /to 4pm
                     int fromIdx = instruction.indexOf("/from");
                     int toIdx = instruction.indexOf("/to");
@@ -105,11 +102,30 @@ public class NoNo {
                         throw new UserInputException("Sorry, end time cannot be empty: /to ...\n");
                     }
                     Task t = new Event(description, start, end);
-                    taskList[taskNum] = t;
+                    taskList.add(t);
                     System.out.println("new task added: " + t + "\n");
-                    taskNum++;
+                } else if (instruction.startsWith("delete")) {
+                    String[] words = instruction.trim().split("\\s+");
+                    if (words.length != 2) {
+                        throw new UserInputException("Sorry, please enter: delete task_number\n");
+                    }
+                    int idx;
+                    try {
+                        idx = Integer.parseInt(words[1]) - 1; // convert string to num
+                    } catch (NumberFormatException error) {
+                        throw new UserInputException("Sorry, task number must be an integer.\n");
+                    }
+                    if (idx < 0 || idx >= taskList.size()) {
+                        throw new UserInputException("Sorry, invalid task number, enter list to check current task list.\n");
+                    } else {
+                        Task deleted = taskList.remove(idx);
+                        System.out.println("OK! The task is deleted:");
+                        System.out.println(deleted);
+                        System.out.println("Now have " + taskList.size() + "task left\n");
+                    }
                 } else {
-                    throw new UserInputException("Sorry, I don't understand, try start with todo/deadline/event to add a task, list to see all the tasks, mark/unmark a task or bye to end the conversation.\n");
+                    throw new UserInputException("Sorry, I don't understand, try start with todo/deadline/event to add a task, " +
+                            "delete to delete a task, list to see all the tasks, mark/unmark a task or bye to end the conversation.\n");
                 }
             } catch (UserInputException error) {
                     System.out.println(error.getMessage());
