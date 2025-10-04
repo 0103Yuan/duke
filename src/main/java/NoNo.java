@@ -15,32 +15,40 @@ public class NoNo {
         while (!instruction.equals("bye")) {
             try {
                 if (instruction.startsWith("mark")) {
-                    String[] words = instruction.split(" ");
-                    if (words.length == 2) {
-                        int numDone = Integer.parseInt(words[1]) - 1; // convert string to num
-                        if (numDone < 0 || numDone >= taskNum) {
-                            System.out.println("Invalid task number\n");
-                            instruction = in.nextLine(); // next instruction
-                            continue;
-                        } else {
-                            taskList[numDone].markAsDone(true);
-                            System.out.println("Nice! The task is marked as done:");
-                            System.out.println("[" + taskList[numDone].getStatusIcon() + "] " + taskList[numDone] + "\n");
-                        }
+                    String[] words = instruction.trim().split("\\s+");
+                    if (words.length != 2) {
+                        throw new UserInputException("Sorry, please enter: mark task_number\n");
+                    }
+                    int numDone;
+                    try {
+                        numDone = Integer.parseInt(words[1]) - 1; // convert string to num
+                    } catch (NumberFormatException error) {
+                        throw new UserInputException("Sorry, task number must be an integer.\n");
+                    }
+                    if (numDone < 0 || numDone >= taskNum) {
+                        throw new UserInputException("Sorry, invalid task number, enter list to check current task list.\n");
+                    } else {
+                        taskList[numDone].markAsDone(true);
+                        System.out.println("Nice! The task is marked as done:");
+                        System.out.println("[" + taskList[numDone].getStatusIcon() + "] " + taskList[numDone] + "\n");
                     }
                 } else if (instruction.startsWith("unmark")) {
-                    String[] words = instruction.split(" ");
-                    if (words.length == 2) {
-                        int numDone = Integer.parseInt(words[1]) - 1;
-                        if (numDone < 0 || numDone >= taskNum) {
-                            System.out.println("Invalid task number\n");
-                            instruction = in.nextLine(); // next instruction
-                            continue;
-                        } else {
-                            taskList[numDone].markAsDone(false);
-                            System.out.println("OK! The task is marked as not done yet:");
-                            System.out.println("[" + taskList[numDone].getStatusIcon() + "] " + taskList[numDone] + "\n");
-                        }
+                    String[] words = instruction.trim().split("\\s+");;
+                    if (words.length != 2) {
+                        throw new UserInputException("Sorry, please enter: unmark task_number\n");
+                    }
+                    int numDone;
+                    try {
+                        numDone = Integer.parseInt(words[1]) - 1;
+                    } catch (NumberFormatException error) {
+                        throw new UserInputException("Sorry, task number must be an integer.\n");
+                    }
+                    if (numDone < 0 || numDone >= taskNum) {
+                        throw new UserInputException("Sorry, invalid task number, enter list to check current task list.\n");
+                    } else {
+                        taskList[numDone].markAsDone(false);
+                        System.out.println("OK! The task is marked as not done yet:");
+                        System.out.println("[" + taskList[numDone].getStatusIcon() + "] " + taskList[numDone] + "\n");
                     }
                 } else if (instruction.equals("list")) {
                     System.out.println("to do list: ");
