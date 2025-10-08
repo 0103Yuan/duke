@@ -50,12 +50,13 @@ public class NoNo {
                         System.out.println("[" + taskList.get(numDone).getStatusIcon() + "] " + taskList.get(numDone) + "\n");
                     }
                 } else if (instruction.equals("list")) {
-                    System.out.println("to do list: ");
+                    System.out.println("Current task list:\n" +
+                            "Task No. Status Type Description");
                     if (taskList.isEmpty()) {
-                        System.out.println("no task added yet\n");
+                        System.out.println("No task added yet\n");
                     } else {
                         for (int j = 0; j < taskList.size(); j++) {
-                            System.out.println((j + 1) + ". " + "[" + taskList.get(j).getStatusIcon() + "]" + taskList.get(j));
+                            System.out.println("     " + (j + 1) + ". " + "   [" + taskList.get(j).getStatusIcon() + "]   " + taskList.get(j));
                         }
                         System.out.println();
                     }
@@ -66,7 +67,7 @@ public class NoNo {
                     }
                     Task t = new ToDo(description);
                     taskList.add(t);
-                    System.out.println("new task added: " + t + "\n");
+                    System.out.println("New task added: " + t + "\n");
                 } else if (instruction.startsWith("deadline")) { // e.g. deadline return book /by Sunday
                     int byIdx = instruction.indexOf("/by");
                     if(byIdx == -1) {
@@ -82,7 +83,7 @@ public class NoNo {
                     }
                     Task t = new Deadline(description, by);
                     taskList.add(t);
-                    System.out.println("new task added: " + t + "\n");
+                    System.out.println("New task added: " + t + "\n");
                 } else if (instruction.startsWith("event")) {  // e.g. event project meeting /from Mon 2pm /to 4pm
                     int fromIdx = instruction.indexOf("/from");
                     int toIdx = instruction.indexOf("/to");
@@ -103,7 +104,7 @@ public class NoNo {
                     }
                     Task t = new Event(description, start, end);
                     taskList.add(t);
-                    System.out.println("new task added: " + t + "\n");
+                    System.out.println("New task added: " + t + "\n");
                 } else if (instruction.startsWith("delete")) {
                     String[] words = instruction.trim().split("\\s+");
                     if (words.length != 2) {
@@ -124,8 +125,12 @@ public class NoNo {
                         System.out.println("Now have " + taskList.size() + "task left\n");
                     }
                 } else {
-                    throw new UserInputException("Sorry, I don't understand, try start with todo/deadline/event to add a task, " +
-                            "delete to delete a task, list to see all the tasks, mark/unmark a task or bye to end the conversation.\n");
+                    throw new UserInputException("Sorry, I don't understand, try start with:\n" +
+                            " 'todo'/'deadline'/'event' - to add a task,\n" +
+                            " 'delete'                  - to delete a task,\n" +
+                            " 'list'                    - to see all the tasks,\n" +
+                            " 'mark'/'unmark'           - to mark/unmark a task,\n" +
+                            " 'bye'                     - to end the conversation.\n");
                 }
             } catch (UserInputException error) {
                     System.out.println(error.getMessage());
