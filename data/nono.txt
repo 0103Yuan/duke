@@ -1,0 +1,2 @@
+T | 1 | read book
+D | 0 | assignment 2 | Sunday

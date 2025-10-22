@@ -1,3 +1,5 @@
+package nono;
+
 public class Event extends Task {
     protected String start;
     protected String end;
@@ -10,6 +12,11 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E] " + super.toString() + "(" + start + end + ")";
+        return "[E][" + getStatusIcon() + "] " + description + " (from: " + start + " to: " + end + ")";
+    }
+
+    @Override
+    public String toDataString() {
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + start + " | " + end;
     }
 }

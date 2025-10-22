@@ -1,3 +1,5 @@
+package nono;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,7 +8,8 @@ public class NoNo {
         System.out.println("Hello! I'm NoNo");
         System.out.println("What can I do for you?\n");
 
-        ArrayList<Task> taskList = new ArrayList<>();
+        Storage storage = new Storage("./data/nono.txt");
+        ArrayList<Task> taskList = storage.load();  // load previous tasks
 
         Scanner in = new Scanner(System.in);
         String instruction = in.nextLine();
@@ -30,6 +33,7 @@ public class NoNo {
                         taskList.get(numDone).markAsDone(true);
                         System.out.println("Nice! The task is marked as done:");
                         System.out.println("[" + taskList.get(numDone).getStatusIcon() + "] " + taskList.get(numDone) + "\n");
+                        storage.save(taskList);
                     }
                 } else if (instruction.startsWith("unmark")) {
                     String[] words = instruction.trim().split("\\s+");;
@@ -48,15 +52,16 @@ public class NoNo {
                         taskList.get(numDone).markAsDone(false);
                         System.out.println("OK! The task is marked as not done yet:");
                         System.out.println("[" + taskList.get(numDone).getStatusIcon() + "] " + taskList.get(numDone) + "\n");
+                        storage.save(taskList);
                     }
                 } else if (instruction.equals("list")) {
                     System.out.println("Current task list:\n" +
-                            "Task No. Status Type Description");
+                            "Task No. Type/Status Description");
                     if (taskList.isEmpty()) {
                         System.out.println("No task added yet\n");
                     } else {
                         for (int j = 0; j < taskList.size(); j++) {
-                            System.out.println("     " + (j + 1) + ". " + "   [" + taskList.get(j).getStatusIcon() + "]   " + taskList.get(j));
+                            System.out.println("     " + (j + 1) + ".    " + taskList.get(j));
                         }
                         System.out.println();
                     }
@@ -68,6 +73,7 @@ public class NoNo {
                     Task t = new ToDo(description);
                     taskList.add(t);
                     System.out.println("New task added: " + t + "\n");
+                    storage.save(taskList);
                 } else if (instruction.startsWith("deadline")) { // e.g. deadline return book /by Sunday
                     int byIdx = instruction.indexOf("/by");
                     if(byIdx == -1) {
@@ -84,6 +90,7 @@ public class NoNo {
                     Task t = new Deadline(description, by);
                     taskList.add(t);
                     System.out.println("New task added: " + t + "\n");
+                    storage.save(taskList);
                 } else if (instruction.startsWith("event")) {  // e.g. event project meeting /from Mon 2pm /to 4pm
                     int fromIdx = instruction.indexOf("/from");
                     int toIdx = instruction.indexOf("/to");
@@ -105,6 +112,7 @@ public class NoNo {
                     Task t = new Event(description, start, end);
                     taskList.add(t);
                     System.out.println("New task added: " + t + "\n");
+                    storage.save(taskList);
                 } else if (instruction.startsWith("delete")) {
                     String[] words = instruction.trim().split("\\s+");
                     if (words.length != 2) {
@@ -123,6 +131,7 @@ public class NoNo {
                         System.out.println("OK! The task is deleted:");
                         System.out.println(deleted);
                         System.out.println("Now have " + taskList.size() + "task left\n");
+                        storage.save(taskList);
                     }
                 } else {
                     throw new UserInputException("Sorry, I don't understand, try start with:\n" +

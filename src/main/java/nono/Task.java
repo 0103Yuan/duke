@@ -1,4 +1,6 @@
-public class Task {
+package nono;
+
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -18,4 +20,6 @@ public class Task {
     public String toString() {  // change format
         return this.description;
     }
+
+    public abstract String toDataString();
 }
