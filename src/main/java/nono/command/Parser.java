@@ -1,4 +1,6 @@
-package nono;
+package nono.command;
+
+import nono.exception.UserInputException;
 
 public class Parser {
     public static Command parse(String instruction) throws UserInputException {

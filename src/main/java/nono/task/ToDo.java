@@ -1,4 +1,4 @@
-package nono;
+package nono.task;
 
 public class ToDo extends Task {
 

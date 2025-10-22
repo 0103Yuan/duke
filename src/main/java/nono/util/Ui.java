@@ -1,4 +1,7 @@
-package nono;
+package nono.util;
+
+import nono.exception.UserInputException;
+import nono.task.Task;
 
 import java.util.Scanner;
 

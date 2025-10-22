@@ -1,4 +1,6 @@
-package nono;
+package nono.command;
+
+import nono.exception.UserInputException;
 
 public class Command {
     public enum Type {
