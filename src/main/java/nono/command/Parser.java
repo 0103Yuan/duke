@@ -1,9 +1,14 @@
 package nono.command;
 
 import nono.exception.UserInputException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
+
     public static Command parse(String instruction) throws UserInputException {
+        instruction = instruction.trim();
+
         if (instruction.equals("list")) {
             return new Command(Command.Type.LIST);
         } else if (instruction.equals("bye")) {
@@ -27,6 +32,14 @@ public class Parser {
                     " 'list'                    - to see all the tasks,\n" +
                     " 'mark'/'unmark'           - to mark/unmark a task,\n" +
                     " 'bye'                     - to end the conversation.\n");
+        }
+    }
+
+    private static void validateDate(String date) throws UserInputException {
+        try {
+            LocalDate.parse(date);
+        } catch (DateTimeParseException e) {
+            throw new UserInputException("Sorry, date format must be yyyy-mm-dd\n");
         }
     }
 
@@ -64,6 +77,9 @@ public class Parser {
         if (by.isEmpty()) {
             throw new UserInputException("Sorry, deadline cannot be empty: /by ...\n");
         }
+
+        validateDate(by);
+
         return new Command(Command.Type.DEADLINE, new String[]{description, by});
     }
 
@@ -85,6 +101,10 @@ public class Parser {
         if (end.isEmpty()) {
             throw new UserInputException("Sorry, end time cannot be empty: /to ...\n");
         }
+
+        validateDate(start);
+        validateDate(end);
+
         return new Command(Command.Type.EVENT, new String[]{description, start, end});
     }
 
