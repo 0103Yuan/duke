@@ -1,24 +1,27 @@
 package nono.task;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
-    protected LocalDate by;
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy");
+    protected LocalDateTime by;
+    private static final DateTimeFormatter INPUT_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter OUTPUT_FORMAT =
+            DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm");
 
-    public Deadline (String description, String by) {
+    public Deadline(String description, String by) {
         super(description);
-        this.by = LocalDate.parse(by); // Convert String to LocalDate
+        this.by = LocalDateTime.parse(by, INPUT_FORMAT);
     }
 
     @Override
     public String toString() {
-        return "[D][" + getStatusIcon() + "] " + description + " (by: " + by.format(FORMATTER) + ")";
+        return "[D][" + getStatusIcon() + "] " + description + " (by: " + by.format(OUTPUT_FORMAT) + ")";
     }
 
     @Override
     public String toDataString() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by.toString();
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by.format(INPUT_FORMAT);
     }
 }

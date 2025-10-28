@@ -1,10 +1,14 @@
 package nono.command;
 
 import nono.exception.UserInputException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Parser {
+
+    private static final DateTimeFormatter INPUT_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public static Command parse(String instruction) throws UserInputException {
         instruction = instruction.trim();
@@ -37,9 +41,9 @@ public class Parser {
 
     private static void validateDate(String date) throws UserInputException {
         try {
-            LocalDate.parse(date);
+            LocalDateTime.parse(date, INPUT_FORMAT);
         } catch (DateTimeParseException e) {
-            throw new UserInputException("Sorry, date format must be yyyy-mm-dd\n");
+            throw new UserInputException("Sorry, date/time must be in format: yyyy-mm-dd HH:mm\n");
         }
     }
 
@@ -71,6 +75,7 @@ public class Parser {
         }
         String description = instruction.substring(8, byIdx).trim();
         String by = instruction.substring(byIdx + 3).trim();
+
         if (description.isEmpty()) {
             throw new UserInputException("Sorry, deadline description cannot be empty: deadline ...\n");
         }
@@ -92,6 +97,7 @@ public class Parser {
         String description = instruction.substring(5, fromIdx).trim();
         String start = instruction.substring(fromIdx + 5, toIdx).trim();
         String end = instruction.substring(toIdx + 3).trim();
+
         if (description.isEmpty()) {
             throw new UserInputException("Sorry, event description cannot be empty: event ...\n");
         }
@@ -121,6 +127,3 @@ public class Parser {
         }
     }
 }
-
-
-
