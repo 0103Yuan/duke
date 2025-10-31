@@ -11,17 +11,29 @@ import nono.util.TaskList;
 import nono.util.Ui;
 import nono.command.Parser;
 
+/**
+ * The main class of the NoNo chatbot application.
+ * Handles initialization, command parsing, execution, and data persistence.
+ */
 public class NoNo {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructs a NoNo chatbot instance.
+     *
+     * @param filePath The path of the file used to save and load tasks.
+     */
     public NoNo(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load());
     }
 
+    /**
+     * Runs the chatbot main loop until the user exits.
+     */
     public void run() {
         ui.showWelcome();
 
@@ -38,6 +50,13 @@ public class NoNo {
         ui.showGoodbye();
     }
 
+    /**
+     * Executes a given command and updates data or UI accordingly.
+     *
+     * @param command The command to execute.
+     * @return True if the command is a BYE command (to exit), false otherwise.
+     * @throws UserInputException If an invalid command or index is encountered.
+     */
     private boolean executeCommand(Command command) throws UserInputException {
         switch (command.getType()) {
             case BYE:
@@ -92,6 +111,11 @@ public class NoNo {
         return false;
     }
 
+    /**
+     * The main entry point of the program.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         new NoNo("./data/nono.txt").run();
     }

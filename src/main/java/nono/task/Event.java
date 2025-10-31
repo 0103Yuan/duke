@@ -3,6 +3,9 @@ package nono.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a task that takes place over a specific time range.
+ */
 public class Event extends Task {
     protected LocalDateTime start;
     protected LocalDateTime end;
@@ -12,6 +15,13 @@ public class Event extends Task {
     private static final DateTimeFormatter OUTPUT_FORMAT =
             DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm");
 
+    /**
+     * Constructs an Event task with a description, start, and end time.
+     *
+     * @param description The task description.
+     * @param start The start time in yyyy-MM-dd HH:mm format.
+     * @param end The end time in yyyy-MM-dd HH:mm format.
+     */
     public Event(String description, String start, String end) {
         super(description);
         this.start = LocalDateTime.parse(start, INPUT_FORMAT);

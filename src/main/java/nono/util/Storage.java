@@ -8,14 +8,26 @@ import nono.task.ToDo;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Handles saving and loading tasks from a local file for data persistence.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Creates a Storage instance for a specific file path.
+     *
+     * @param filePath The path of the file used for storing tasks.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
-    // Load tasks from file
+    /**
+     * Loads tasks from the data file.
+     *
+     * @return A list of tasks loaded from the file.
+     */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -60,7 +72,11 @@ public class Storage {
         return tasks;
     }
 
-    // Save tasks to file
+    /**
+     * Saves all tasks to the data file.
+     *
+     * @param tasks The list of tasks to save.
+     */
     public void save(ArrayList<Task> tasks) {
         try {
             FileWriter writer = new FileWriter(filePath);

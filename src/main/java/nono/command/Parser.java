@@ -5,11 +5,22 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parses user input strings into {@link Command} objects for execution.
+ * Supports commands such as list, todo, deadline, event, mark, unmark, delete, and bye.
+ */
 public class Parser {
 
     private static final DateTimeFormatter INPUT_FORMAT =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    /**
+     * Parses a user instruction string and returns a corresponding {@link Command}.
+     *
+     * @param instruction The raw user input string.
+     * @return A Command representing the parsed instruction.
+     * @throws UserInputException If the input format or command syntax is invalid.
+     */
     public static Command parse(String instruction) throws UserInputException {
         instruction = instruction.trim();
 
@@ -39,6 +50,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Validates that the given date string follows the expected format.
+     *
+     * @param date The date string to validate.
+     * @throws UserInputException If the date format is invalid.
+     */
     private static void validateDate(String date) throws UserInputException {
         try {
             LocalDateTime.parse(date, INPUT_FORMAT);
@@ -47,6 +64,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a mark or unmark command.
+     *
+     * @param instruction The full user input.
+     * @param isMark True if marking a task, false if unmarking.
+     * @return A Command representing the mark/unmark action.
+     * @throws UserInputException If the command format is invalid.
+     */
     private static Command parseMarkCommand(String instruction, boolean isMark) throws UserInputException {
         String[] words = instruction.trim().split("\\s+");
         if (words.length != 2) {
@@ -60,6 +85,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a todo command.
+     *
+     * @param instruction The full user input.
+     * @return A Command representing the todo task creation.
+     * @throws UserInputException If the description is empty.
+     */
     private static Command parseTodoCommand(String instruction) throws UserInputException {
         String description = instruction.substring(4).trim();
         if (description.isEmpty()) {
@@ -68,6 +100,13 @@ public class Parser {
         return new Command(Command.Type.TODO, description);
     }
 
+    /**
+     * Parses a deadline command.
+     *
+     * @param instruction The full user input.
+     * @return A Command representing the deadline task creation.
+     * @throws UserInputException If the format or date/time is invalid.
+     */
     private static Command parseDeadlineCommand(String instruction) throws UserInputException {
         int byIdx = instruction.indexOf("/by");
         if (byIdx == -1) {
@@ -88,6 +127,13 @@ public class Parser {
         return new Command(Command.Type.DEADLINE, new String[]{description, by});
     }
 
+    /**
+     * Parses an event command.
+     *
+     * @param instruction The full user input.
+     * @return A Command representing the event task creation.
+     * @throws UserInputException If the format or date/time is invalid.
+     */
     private static Command parseEventCommand(String instruction) throws UserInputException {
         int fromIdx = instruction.indexOf("/from");
         int toIdx = instruction.indexOf("/to");
@@ -114,6 +160,13 @@ public class Parser {
         return new Command(Command.Type.EVENT, new String[]{description, start, end});
     }
 
+    /**
+     * Parses a delete command.
+     *
+     * @param instruction The full user input.
+     * @return A Command representing the delete action.
+     * @throws UserInputException If the command format or task number is invalid.
+     */
     private static Command parseDeleteCommand(String instruction) throws UserInputException {
         String[] words = instruction.trim().split("\\s+");
         if (words.length != 2) {
