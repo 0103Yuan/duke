@@ -8,6 +8,7 @@ import java.util.ArrayList;
 /**
  * Manages the list of tasks in memory.
  * Supports adding, deleting, marking, and retrieving tasks.
+ * Now checks for duplicate tasks before adding a new one.
  */
 public class TaskList {
     private ArrayList<Task> tasks;
@@ -30,10 +31,17 @@ public class TaskList {
 
     /**
      * Adds a task to the list.
+     * Checks for duplicates before adding.
      *
      * @param task The task to add.
+     * @throws UserInputException If a duplicate task already exists.
      */
-    public void addTask(Task task) {
+    public void addTask(Task task) throws UserInputException {
+        for (Task existing : tasks) {
+            if (existing.toString().equalsIgnoreCase(task.toString())) {
+                throw new UserInputException("This task already exists: " + existing + "\n");
+            }
+        }
         tasks.add(task);
     }
 
