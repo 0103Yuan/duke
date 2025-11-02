@@ -7,7 +7,7 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Parses user input strings into {@link Command} objects for execution.
- * Supports commands such as list, todo, deadline, event, mark, unmark, delete, and bye.
+ * Supports commands such as list, todo, deadline, event, mark, unmark, delete, find, and bye.
  */
 public class Parser {
 
@@ -40,12 +40,15 @@ public class Parser {
             return parseEventCommand(instruction);
         } else if (instruction.startsWith("delete")) {
             return parseDeleteCommand(instruction);
+        } else if (instruction.startsWith("find")) {
+            return parseFindCommand(instruction);
         } else {
             throw new UserInputException("Sorry, I don't understand, try start with:\n" +
                     " 'todo'/'deadline'/'event' - to add a task,\n" +
                     " 'delete'                  - to delete a task,\n" +
                     " 'list'                    - to see all the tasks,\n" +
                     " 'mark'/'unmark'           - to mark/unmark a task,\n" +
+                    " 'find'                    - to search for a task,\n" +
                     " 'bye'                     - to end the conversation.\n");
         }
     }
@@ -178,5 +181,20 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new UserInputException("Sorry, task number must be an integer.\n");
         }
+    }
+
+    /**
+     * Parses a find command.
+     *
+     * @param instruction The full user input.
+     * @return A Command representing the find action.
+     * @throws UserInputException If the keyword is empty.
+     */
+    private static Command parseFindCommand(String instruction) throws UserInputException {
+        String keyword = instruction.substring(4).trim();
+        if (keyword.isEmpty()) {
+            throw new UserInputException("Sorry, please enter: find keyword\n");
+        }
+        return new Command(Command.Type.FIND, keyword);
     }
 }

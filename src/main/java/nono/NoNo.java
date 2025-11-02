@@ -107,6 +107,10 @@ public class NoNo {
                 ui.showDeleteResult(deletedTask, tasks.size());
                 storage.save(tasks.getAllTasks());
                 break;
+
+            case FIND:
+                ui.showFindResults(tasks, command.getDescription());
+                break;
         }
         return false;
     }

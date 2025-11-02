@@ -11,7 +11,7 @@ public class Command {
      * Enumeration of supported command types.
      */
     public enum Type {
-        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, BYE
+        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, BYE, FIND
     }
 
     private Type type;

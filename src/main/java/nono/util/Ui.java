@@ -114,4 +114,28 @@ public class Ui {
     public void showAddResult(Task task) {
         System.out.println("New task added: " + task + "\n");
     }
+
+    /**
+     * Displays search results for the 'find' command.
+     *
+     * @param tasks   The task list to search within.
+     * @param keyword The keyword used for searching.
+     */
+    public void showFindResults(TaskList tasks, String keyword) {
+        System.out.println("Here are the matching tasks in your list:");
+        int count = 0;
+        for (int i = 0; i < tasks.size(); i++) {
+            try {
+                if (tasks.getTask(i).toString().toLowerCase().contains(keyword.toLowerCase())) {
+                    System.out.println("     " + (++count) + ". " + tasks.getTask(i));
+                }
+            } catch (UserInputException e) {
+                System.out.println("     [Error: Invalid task]");
+            }
+        }
+        if (count == 0) {
+            System.out.println("No matching tasks found");
+        }
+        System.out.println();
+    }
 }
