@@ -19,8 +19,8 @@ public class Event extends Task {
      * Constructs an Event task with a description, start, and end time.
      *
      * @param description The task description.
-     * @param start The start time in yyyy-MM-dd HH:mm format.
-     * @param end The end time in yyyy-MM-dd HH:mm format.
+     * @param start       The start time in yyyy-MM-dd HH:mm format.
+     * @param end         The end time in yyyy-MM-dd HH:mm format.
      */
     public Event(String description, String start, String end) {
         super(description);

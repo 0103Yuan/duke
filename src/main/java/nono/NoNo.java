@@ -1,6 +1,7 @@
 package nono;
 
 import nono.command.Command;
+import nono.command.Parser;
 import nono.exception.UserInputException;
 import nono.task.Deadline;
 import nono.task.Event;
@@ -9,7 +10,6 @@ import nono.task.ToDo;
 import nono.util.Storage;
 import nono.util.TaskList;
 import nono.util.Ui;
-import nono.command.Parser;
 
 /**
  * The main class of the NoNo chatbot application.
@@ -59,58 +59,58 @@ public class NoNo {
      */
     private boolean executeCommand(Command command) throws UserInputException {
         switch (command.getType()) {
-            case BYE:
-                storage.save(tasks.getAllTasks());
-                return true;
+        case BYE:
+            storage.save(tasks.getAllTasks());
+            return true;
 
-            case LIST:
-                ui.showTaskList(tasks);
-                break;
+        case LIST:
+            ui.showTaskList(tasks);
+            break;
 
-            case MARK:
-                tasks.markTask(command.getTaskIndex() - 1, true);
-                ui.showMarkResult(tasks.getTask(command.getTaskIndex() - 1), true);
-                storage.save(tasks.getAllTasks());
-                break;
+        case MARK:
+            tasks.markTask(command.getTaskIndex() - 1, true);
+            ui.showMarkResult(tasks.getTask(command.getTaskIndex() - 1), true);
+            storage.save(tasks.getAllTasks());
+            break;
 
-            case UNMARK:
-                tasks.markTask(command.getTaskIndex() - 1, false);
-                ui.showMarkResult(tasks.getTask(command.getTaskIndex() - 1), false);
-                storage.save(tasks.getAllTasks());
-                break;
+        case UNMARK:
+            tasks.markTask(command.getTaskIndex() - 1, false);
+            ui.showMarkResult(tasks.getTask(command.getTaskIndex() - 1), false);
+            storage.save(tasks.getAllTasks());
+            break;
 
-            case TODO:
-                Task todo = new ToDo(command.getDescription());
-                tasks.addTask(todo);
-                ui.showAddResult(todo);
-                storage.save(tasks.getAllTasks());
-                break;
+        case TODO:
+            Task todo = new ToDo(command.getDescription());
+            tasks.addTask(todo);
+            ui.showAddResult(todo);
+            storage.save(tasks.getAllTasks());
+            break;
 
-            case DEADLINE:
-                String[] deadlineDetails = command.getDetails();
-                Task deadline = new Deadline(deadlineDetails[0], deadlineDetails[1]);
-                tasks.addTask(deadline);
-                ui.showAddResult(deadline);
-                storage.save(tasks.getAllTasks());
-                break;
+        case DEADLINE:
+            String[] deadlineDetails = command.getDetails();
+            Task deadline = new Deadline(deadlineDetails[0], deadlineDetails[1]);
+            tasks.addTask(deadline);
+            ui.showAddResult(deadline);
+            storage.save(tasks.getAllTasks());
+            break;
 
-            case EVENT:
-                String[] eventDetails = command.getDetails();
-                Task event = new Event(eventDetails[0], eventDetails[1], eventDetails[2]);
-                tasks.addTask(event);
-                ui.showAddResult(event);
-                storage.save(tasks.getAllTasks());
-                break;
+        case EVENT:
+            String[] eventDetails = command.getDetails();
+            Task event = new Event(eventDetails[0], eventDetails[1], eventDetails[2]);
+            tasks.addTask(event);
+            ui.showAddResult(event);
+            storage.save(tasks.getAllTasks());
+            break;
 
-            case DELETE:
-                Task deletedTask = tasks.deleteTask(command.getTaskIndex() - 1);
-                ui.showDeleteResult(deletedTask, tasks.size());
-                storage.save(tasks.getAllTasks());
-                break;
+        case DELETE:
+            Task deletedTask = tasks.deleteTask(command.getTaskIndex() - 1);
+            ui.showDeleteResult(deletedTask, tasks.size());
+            storage.save(tasks.getAllTasks());
+            break;
 
-            case FIND:
-                ui.showFindResults(tasks, command.getDescription());
-                break;
+        case FIND:
+            ui.showFindResults(tasks, command.getDescription());
+            break;
         }
         return false;
     }

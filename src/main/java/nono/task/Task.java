@@ -31,11 +31,13 @@ public abstract class Task {
      *
      * @param status True if done, false otherwise.
      */
-    public void markAsDone(boolean status){
+    public void markAsDone(boolean status) {
         isDone = status;
     }
 
-    /** @return The string representation of the task. */
+    /**
+     * @return The string representation of the task.
+     */
     public String toString() {
         return this.description;
     }

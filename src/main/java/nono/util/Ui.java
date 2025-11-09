@@ -1,9 +1,9 @@
 package nono.util;
 
+import java.util.Scanner;
+
 import nono.exception.UserInputException;
 import nono.task.Task;
-
-import java.util.Scanner;
 
 /**
  * Handles user interactions by displaying messages and reading input from the console.
@@ -85,7 +85,7 @@ public class Ui {
     /**
      * Displays the result of marking or unmarking a task.
      *
-     * @param task The task that was marked or unmarked.
+     * @param task   The task that was marked or unmarked.
      * @param isMark True if the task was marked done, false if unmarked.
      */
     public void showMarkResult(Task task, boolean isMark) {
@@ -97,7 +97,7 @@ public class Ui {
     /**
      * Displays the result of deleting a task.
      *
-     * @param task The deleted task.
+     * @param task           The deleted task.
      * @param remainingTasks The number of tasks remaining after deletion.
      */
     public void showDeleteResult(Task task, int remainingTasks) {

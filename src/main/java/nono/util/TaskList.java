@@ -1,9 +1,9 @@
 package nono.util;
 
+import java.util.ArrayList;
+
 import nono.exception.UserInputException;
 import nono.task.Task;
-
-import java.util.ArrayList;
 
 /**
  * Manages the list of tasks in memory.
@@ -76,7 +76,7 @@ public class TaskList {
     /**
      * Marks or unmarks a task as done.
      *
-     * @param index The task index (0-based).
+     * @param index  The task index (0-based).
      * @param status True to mark as done, false otherwise.
      * @throws UserInputException If the index is invalid.
      */

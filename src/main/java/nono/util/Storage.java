@@ -1,12 +1,16 @@
 package nono.util;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import nono.task.Deadline;
 import nono.task.Event;
 import nono.task.Task;
 import nono.task.ToDo;
-
-import java.io.*;
-import java.util.ArrayList;
 
 /**
  * Handles saving and loading tasks from a local file for data persistence.
@@ -48,15 +52,15 @@ public class Storage {
                 Task task = null;
 
                 switch (type) {
-                    case "T":
-                        task = new ToDo(parts[2]);
-                        break;
-                    case "D":
-                        task = new Deadline(parts[2], parts[3]);
-                        break;
-                    case "E":
-                        task = new Event(parts[2], parts[3], parts[4]);
-                        break;
+                case "T":
+                    task = new ToDo(parts[2]);
+                    break;
+                case "D":
+                    task = new Deadline(parts[2], parts[3]);
+                    break;
+                case "E":
+                    task = new Event(parts[2], parts[3], parts[4]);
+                    break;
                 }
 
                 if (task != null) {

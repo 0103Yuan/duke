@@ -1,10 +1,16 @@
 package nono.util;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
-import nono.task.*;
-import nono.exception.UserInputException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+
+import nono.exception.UserInputException;
+import nono.task.Deadline;
+import nono.task.Event;
+import nono.task.ToDo;
 
 public class TaskListTest {
 

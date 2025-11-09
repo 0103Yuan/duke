@@ -1,9 +1,10 @@
 package nono.command;
 
-import nono.exception.UserInputException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import nono.exception.UserInputException;
 
 /**
  * Parses user input strings into {@link Command} objects for execution.
@@ -71,7 +72,7 @@ public class Parser {
      * Parses a mark or unmark command.
      *
      * @param instruction The full user input.
-     * @param isMark True if marking a task, false if unmarking.
+     * @param isMark      True if marking a task, false if unmarking.
      * @return A Command representing the mark/unmark action.
      * @throws UserInputException If the command format is invalid.
      */
