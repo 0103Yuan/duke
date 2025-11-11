@@ -57,7 +57,7 @@ public class TaskList {
     public Task deleteTask(int index) throws UserInputException {
         assert index >= 0 : "Index should not be negative";
         if (index >= tasks.size()) {
-            throw new UserInputException("Sorry, invalid task number.");
+            throw new UserInputException("Sorry, invalid task number.\n");
         }
         return tasks.remove(index);
     }
@@ -72,7 +72,7 @@ public class TaskList {
     public Task getTask(int index) throws UserInputException {
         assert index >= 0 : "Index should not be negative";
         if (index >= tasks.size()) {
-            throw new UserInputException("Sorry, invalid task number.");
+            throw new UserInputException("Sorry, invalid task number.\n");
         }
         return tasks.get(index);
     }
@@ -87,7 +87,7 @@ public class TaskList {
     public void markTask(int index, boolean status) throws UserInputException {
         assert index >= 0 : "Index should not be negative";
         if (index >= tasks.size()) {
-            throw new UserInputException("Sorry, invalid task number.");
+            throw new UserInputException("Sorry, invalid task number.\n");
         }
         tasks.get(index).markAsDone(status);
     }
