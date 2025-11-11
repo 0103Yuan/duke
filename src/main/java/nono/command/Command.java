@@ -23,6 +23,7 @@ public class Command {
      * @param type The command type.
      */
     public Command(Type type) {
+        assert type != null : "Command type should not be null";
         this.type = type;
     }
 
@@ -33,6 +34,7 @@ public class Command {
      * @param description The task description.
      */
     public Command(Type type, String description) {
+        assert type != null : "Command type should not be null";
         this.type = type;
         this.description = description;
     }
@@ -44,6 +46,8 @@ public class Command {
      * @param taskIndex The task index.
      */
     public Command(Type type, int taskIndex) {
+        assert type != null : "Command type should not be null";
+        assert taskIndex >= 0 : "Task index should not be negative";
         this.type = type;
         this.taskIndex = taskIndex;
     }
@@ -55,6 +59,8 @@ public class Command {
      * @param details The command details.
      */
     public Command(Type type, String[] details) {
+        assert type != null : "Command type should not be null";
+        assert details != null : "Details should not be null";
         this.type = type;
         this.details = details;
     }
@@ -63,6 +69,7 @@ public class Command {
      * @return The command type.
      */
     public Type getType() {
+        assert type != null : "Command type should not be null";
         return type;
     }
 
@@ -84,6 +91,7 @@ public class Command {
      * @return The task index.
      */
     public int getTaskIndex() {
+        assert taskIndex >= 0 : "Task index should not be negative";
         return taskIndex;
     }
 }

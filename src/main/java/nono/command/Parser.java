@@ -23,6 +23,7 @@ public class Parser {
      * @throws UserInputException If the input format or command syntax is invalid.
      */
     public static Command parse(String instruction) throws UserInputException {
+        assert instruction != null : "Instruction should not be null";
         instruction = instruction.trim();
 
         if (instruction.equals("list")) {
@@ -61,6 +62,7 @@ public class Parser {
      * @throws UserInputException If the date format is invalid.
      */
     private static void validateDate(String date) throws UserInputException {
+        assert date != null : "Date string should not be null";
         try {
             LocalDateTime.parse(date, INPUT_FORMAT);
         } catch (DateTimeParseException e) {
@@ -77,12 +79,14 @@ public class Parser {
      * @throws UserInputException If the command format is invalid.
      */
     private static Command parseMarkCommand(String instruction, boolean isMark) throws UserInputException {
+        assert instruction != null : "Instruction should not be null";
         String[] words = instruction.trim().split("\\s+");
         if (words.length != 2) {
             throw new UserInputException("Sorry, please enter: " + (isMark ? "mark" : "unmark") + " task_number\n");
         }
         try {
             int taskNum = Integer.parseInt(words[1]);
+            assert taskNum > 0 : "Task number should be positive";
             return new Command(isMark ? Command.Type.MARK : Command.Type.UNMARK, taskNum);
         } catch (NumberFormatException e) {
             throw new UserInputException("Sorry, task number must be an integer.\n");
@@ -97,6 +101,7 @@ public class Parser {
      * @throws UserInputException If the description is empty.
      */
     private static Command parseTodoCommand(String instruction) throws UserInputException {
+        assert instruction != null : "Instruction should not be null";
         String description = instruction.substring(4).trim();
         if (description.isEmpty()) {
             throw new UserInputException("Sorry, the to do description cannot be empty: todo ...\n");
@@ -112,6 +117,7 @@ public class Parser {
      * @throws UserInputException If the format or date/time is invalid.
      */
     private static Command parseDeadlineCommand(String instruction) throws UserInputException {
+        assert instruction != null : "Instruction should not be null";
         int byIdx = instruction.indexOf("/by");
         if (byIdx == -1) {
             throw new UserInputException("Sorry, deadline must contain: /by\n");
@@ -139,6 +145,7 @@ public class Parser {
      * @throws UserInputException If the format or date/time is invalid.
      */
     private static Command parseEventCommand(String instruction) throws UserInputException {
+        assert instruction != null : "Instruction should not be null";
         int fromIdx = instruction.indexOf("/from");
         int toIdx = instruction.indexOf("/to");
         if (fromIdx == -1 || toIdx == -1) {
@@ -172,12 +179,14 @@ public class Parser {
      * @throws UserInputException If the command format or task number is invalid.
      */
     private static Command parseDeleteCommand(String instruction) throws UserInputException {
+        assert instruction != null : "Instruction should not be null";
         String[] words = instruction.trim().split("\\s+");
         if (words.length != 2) {
             throw new UserInputException("Sorry, please enter: delete task_number\n");
         }
         try {
             int taskNum = Integer.parseInt(words[1]);
+            assert taskNum > 0 : "Task number should be positive";
             return new Command(Command.Type.DELETE, taskNum);
         } catch (NumberFormatException e) {
             throw new UserInputException("Sorry, task number must be an integer.\n");
@@ -192,6 +201,7 @@ public class Parser {
      * @throws UserInputException If the keyword is empty.
      */
     private static Command parseFindCommand(String instruction) throws UserInputException {
+        assert instruction != null : "Instruction should not be null";
         String keyword = instruction.substring(4).trim();
         if (keyword.isEmpty()) {
             throw new UserInputException("Sorry, please enter: find keyword\n");

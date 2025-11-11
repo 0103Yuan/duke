@@ -26,6 +26,7 @@ public class TaskList {
      * @param tasks The initial list of tasks.
      */
     public TaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "Task list should not be null";
         this.tasks = tasks;
     }
 
@@ -37,6 +38,7 @@ public class TaskList {
      * @throws UserInputException If a duplicate task already exists.
      */
     public void addTask(Task task) throws UserInputException {
+        assert task != null : "Task to add should not be null";
         for (Task existing : tasks) {
             if (existing.toString().equalsIgnoreCase(task.toString())) {
                 throw new UserInputException("This task already exists: " + existing + "\n");
@@ -53,7 +55,8 @@ public class TaskList {
      * @throws UserInputException If the index is invalid.
      */
     public Task deleteTask(int index) throws UserInputException {
-        if (index < 0 || index >= tasks.size()) {
+        assert index >= 0 : "Index should not be negative";
+        if (index >= tasks.size()) {
             throw new UserInputException("Sorry, invalid task number.");
         }
         return tasks.remove(index);
@@ -67,7 +70,8 @@ public class TaskList {
      * @throws UserInputException If the index is invalid.
      */
     public Task getTask(int index) throws UserInputException {
-        if (index < 0 || index >= tasks.size()) {
+        assert index >= 0 : "Index should not be negative";
+        if (index >= tasks.size()) {
             throw new UserInputException("Sorry, invalid task number.");
         }
         return tasks.get(index);
@@ -81,7 +85,8 @@ public class TaskList {
      * @throws UserInputException If the index is invalid.
      */
     public void markTask(int index, boolean status) throws UserInputException {
-        if (index < 0 || index >= tasks.size()) {
+        assert index >= 0 : "Index should not be negative";
+        if (index >= tasks.size()) {
             throw new UserInputException("Sorry, invalid task number.");
         }
         tasks.get(index).markAsDone(status);
